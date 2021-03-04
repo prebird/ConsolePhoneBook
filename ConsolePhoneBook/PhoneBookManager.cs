@@ -193,12 +193,10 @@ namespace ConsolePhoneBook
                 return; // 밑에 실행되면 안되니까 return!!!
             }
 
-            //for (int i = 0; i < curCnt; i++)
-            //{
-            //    infoStorage[i].ShowPhoneInfo();
-            //}
-
-            infoStorage[0].ShowPhoneInfo();
+            for (int i = 0; i < curCnt; i++)
+            {
+                infoStorage[i].ShowPhoneInfo();
+            }
         }
 
         public void SearchData()

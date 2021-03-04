@@ -33,15 +33,15 @@ namespace ConsolePhoneBook
                                     manager.InputData();
                                     bFlag = false;
                                     break;
-                                case 2:          //대학
+                                case 2:          // 대학
                                     manager.InputUnivData();
                                     bFlag = false;
                                     break;
-                                case 3:          //회사
+                                case 3:          // 회사
                                     manager.InputCompanyData();
                                     bFlag = false;
                                     break;
-                                default:         //다시선택
+                                default:         // 다시선택
                                     Console.WriteLine("다시 선택하시오");
                                     break;
                             } 
