@@ -21,7 +21,32 @@ namespace ConsolePhoneBook
 
                 switch(choice)
                 {
-                    case 1: manager.InputData(); break;
+                    case 1: //manager.InputData(); break;
+                        manager.ShowSelectMenu();
+                        int choice2 = int.Parse(Console.ReadLine());
+                        bool bFlag = true;
+                        while (bFlag)
+                        {
+                            switch (choice2)
+                            {
+                                case 1:          // 일반
+                                    manager.InputData();
+                                    bFlag = false;
+                                    break;
+                                case 2:          //대학
+                                    manager.InputUnivData();
+                                    bFlag = false;
+                                    break;
+                                case 3:          //회사
+                                    manager.InputCompanyData();
+                                    bFlag = false;
+                                    break;
+                                default:         //다시선택
+                                    Console.WriteLine("다시 선택하시오");
+                                    break;
+                            } 
+                        }
+                        break;
                     case 2: manager.ListData(); break;
                     case 3: manager.SearchData(); break;
                     case 4: manager.DeleteData(); break;

@@ -46,10 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompanyPhoneInfo.cs" />
     <Compile Include="PhoneBookManager.cs" />
     <Compile Include="PhoneInfo.cs" />
     <Compile Include="Programs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnivPhoneInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
