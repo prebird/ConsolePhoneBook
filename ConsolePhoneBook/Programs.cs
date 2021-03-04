@@ -12,6 +12,7 @@ namespace ConsolePhoneBook
         static void Main(string[] args)
         {
             PhoneBookManager manager = new PhoneBookManager();
+            CompanyPhoneInfo a = new CompanyPhoneInfo("3","4");
 
             while (true)
             {
@@ -23,10 +24,11 @@ namespace ConsolePhoneBook
                 {
                     case 1: //manager.InputData(); break;
                         manager.ShowSelectMenu();
-                        int choice2 = int.Parse(Console.ReadLine());
+                        
                         bool bFlag = true;
                         while (bFlag)
                         {
+                            int choice2 = int.Parse(Console.ReadLine());
                             switch (choice2)
                             {
                                 case 1:          // 일반
@@ -53,7 +55,7 @@ namespace ConsolePhoneBook
                     case 5:
                         Console.WriteLine("프로그램을 종료합니다.");
                         return; // 반복문 까지 종료
-
+                        
                 }
             }
         }

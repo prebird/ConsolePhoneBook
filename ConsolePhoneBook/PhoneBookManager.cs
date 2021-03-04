@@ -17,14 +17,14 @@ namespace ConsolePhoneBook
             Console.WriteLine("-------------------주소록--------------------------");
             Console.WriteLine("  1.입력 |  2.목록  |  3.검색 |  4.삭제  |  5.종료   ");
             Console.WriteLine("-------------------주소록--------------------------");
-            Console.WriteLine("선택: ");
+            Console.Write("선택: ");
         }
 
         public void ShowSelectMenu()
         {
             Console.WriteLine("구분을 선택해 주세요");
             Console.WriteLine("      1.일반 |  2.대학  |  3.회사    ");
-            Console.WriteLine("선택: ");
+            Console.Write("선택: ");
         }
 
         private int CheckName(string name) // private으로 해도 됨 *****************중요******
@@ -69,7 +69,7 @@ namespace ConsolePhoneBook
                 Console.WriteLine("전화번호는 필수 입력입니다.");
                 return;
             }
-            Console.WriteLine("생일");
+            Console.Write("생일");
             string birth = Console.ReadLine().Trim();
             if (birth.Length < 1)
             {
@@ -195,9 +195,29 @@ namespace ConsolePhoneBook
 
             for (int i = 0; i < curCnt; i++)
             {
+                ChangeType(i);
+            }
+        }
+
+
+        public void ChangeType(int i)
+        {
+            if (infoStorage[i].GetType().Name == "CompanyPhoneInfo")
+            {
+                CompanyPhoneInfo temp = (CompanyPhoneInfo)infoStorage[i];
+                temp.ShowPhoneInfo();
+            }
+            else if (infoStorage[i].GetType().Name == "UnivPhoneInfo")
+            {
+                UnivPhoneInfo temp = (UnivPhoneInfo)infoStorage[i];
+                temp.ShowPhoneInfo();
+            }
+            else
+            {
                 infoStorage[i].ShowPhoneInfo();
             }
         }
+
 
         public void SearchData()
         {
@@ -210,7 +230,7 @@ namespace ConsolePhoneBook
             }
             else
             {
-                infoStorage[dataIdx].ShowPhoneInfo();
+                ChangeType(dataIdx);
             }
         }
 
