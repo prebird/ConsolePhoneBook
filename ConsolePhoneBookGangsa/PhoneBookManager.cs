@@ -14,9 +14,9 @@ namespace ConsolePhoneBook
 
         public void ShowMenu()
         {
-            Console.WriteLine("-------------------주소록--------------------------");
-            Console.WriteLine("  1.입력 |  2.목록  |  3.검색 |  4.삭제  |  5.종료   ");
-            Console.WriteLine("-------------------주소록--------------------------");
+            Console.WriteLine("-------------------주소록-----------------------------------------");
+            Console.WriteLine("  1.입력 |  2.목록  |  3.검색 |  4.삭제  |  5.수정  | 6.종료   ");
+            Console.WriteLine("-------------------주소록------------------------------------------");
             Console.Write("선택: ");
         }
 
@@ -58,7 +58,7 @@ namespace ConsolePhoneBook
 
         private int CheckName(string name) // private으로 해도 됨 *****************중요******
         {
-            // 이름중복체크
+            // 이름 인덱스 찾기 or 중복체크
             for (int index = 0; index < curCnt; index++) // 놓쳤다
             {
                 if (infoStorage[index].Name == name)
@@ -210,6 +210,51 @@ namespace ConsolePhoneBook
 
         }
 
-       
+        public void AlterData()
+        {
+            Console.WriteLine("수정 하실 이름: ");
+            string name = Console.ReadLine().Trim();
+            int dataIdx = CheckName(name);
+            if (dataIdx < 0)
+            {
+                Console.WriteLine("수정할 데이터가 없습니다.");
+            }
+            else
+            {
+                infoStorage[dataIdx].ShowPhoneInfo();
+                Console.WriteLine("수정할 정보를 선택해 주세요");
+                if (infoStorage[dataIdx].GetType().Name == "PhoneCompanyInfo" )
+                {
+                    Console.WriteLine("1.이름  2.전화번호  3.생일   4.회사명");
+                    CommonAlter(dataIdx);
+                }
+                else if (infoStorage[dataIdx].GetType().Name == "PhoneUnivInfo")
+                {
+                    
+                    Console.WriteLine("1.이름  2.전화번호  3.생일   4.전공   5.학년");
+                    CommonAlter(dataIdx);
+                }
+                else
+                {
+                    Console.WriteLine("1.이름  2.전화번호  3.생일");
+                    CommonAlter(dataIdx);
+                }
+
+                string AlterSelect = Console.ReadLine();
+
+                Console.WriteLine($"{name} 번호가 수정되었습니다.");
+            }
+ 
+        }
+        public void CommonAlter(int dataIdx)
+        {
+            string num = Console.ReadLine();
+            Console.WriteLine("수정할 값을 입력해 주세요");
+            string value = Console.ReadLine();
+            infoStorage[dataIdx].AlterPhonInfo(num, value);
+        }
+
+
+
     }
 }

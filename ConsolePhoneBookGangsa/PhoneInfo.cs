@@ -42,11 +42,28 @@ namespace ConsolePhoneBook
             Console.WriteLine();
         }
 
+        public virtual void AlterPhonInfo( string num, string value )
+        {
+            
+            if (num == "1")
+            {
+                this.name = value;
+            }
+            else if (num == "2")
+            {
+                this.phoneNumber = value;
+            }
+            else if (num =="3")
+            {
+                this.birth = value;
+            }
+        }
 
 
     }
 
     public class PhoneUnivInfo : PhoneInfo
+
     {
         string major;
         int year;
@@ -61,8 +78,26 @@ namespace ConsolePhoneBook
         {
             base.ShowPhoneInfo();
             Console.Write("\tmajor: " + this.major);
-            Console.Write("\tmajor: " + this.major);
+            Console.Write("\tyear: " + this.year);
             Console.WriteLine();
+        }
+
+        public override void AlterPhonInfo(string num, string value)
+        {
+
+            base.AlterPhonInfo( num, value);
+            if (num == "4")
+            {
+                this.major = value;
+            }
+            else if (num == "5")
+            {
+                bool isNum = int.TryParse(value, out this.year);
+                if (!isNum)
+                {
+                    return;
+                }
+            }
         }
     }
 
@@ -80,6 +115,15 @@ namespace ConsolePhoneBook
             base.ShowPhoneInfo();
             Console.Write("\tcompany: " + this.company);
             Console.WriteLine();
+        }
+
+        public override void AlterPhonInfo(string num, string value)
+        {
+            base.AlterPhonInfo(num, value);
+            if (num == "4")
+            {
+                this.company = value;
+            }
         }
     }
 }
