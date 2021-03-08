@@ -34,6 +34,13 @@ namespace ConsolePhoneBook
             this.birth = birth;
         }
 
+        public override string ToString()
+        {
+            string birth_null = (birth == null) ? "나이 미상" : birth;
+            return $"name : {name} \t phone:{phoneNumber} \t birth:{birth_null} \n";
+        }
+
+        /*
         public virtual void ShowPhoneInfo() // 이 메서드를 안만들면 다른 클래스에서 get 할때 모든 prop를 만들어야함
         {
             Console.Write("name :" + this.name);
@@ -41,6 +48,7 @@ namespace ConsolePhoneBook
             Console.Write("\tbirth :" + this.birth);
             Console.WriteLine();
         }
+        */
 
         public virtual void AlterPhonInfo( string num, string value )
         {
@@ -74,6 +82,13 @@ namespace ConsolePhoneBook
             this.year = year;
         }
 
+        public override string ToString()
+        {
+            return $"{base.ToString()}\tmajor: {major}\tyear: {year}\n";
+        }
+
+
+        /*
         public override void ShowPhoneInfo()
         {
             base.ShowPhoneInfo();
@@ -81,7 +96,7 @@ namespace ConsolePhoneBook
             Console.Write("\tyear: " + this.year);
             Console.WriteLine();
         }
-
+        */
         public override void AlterPhonInfo(string num, string value)
         {
 
@@ -110,13 +125,20 @@ namespace ConsolePhoneBook
             this.company = company;
         }
 
+        public override string ToString()
+        {
+            return $"{base.ToString()}\tcompany: {company}\n";
+        }
+
+
+        /*
         public override void ShowPhoneInfo()
         {
             base.ShowPhoneInfo();
             Console.Write("\tcompany: " + this.company);
             Console.WriteLine();
         }
-
+        */
         public override void AlterPhonInfo(string num, string value)
         {
             base.AlterPhonInfo(num, value);

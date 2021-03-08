@@ -165,7 +165,8 @@ namespace ConsolePhoneBook
 
             for (int i = 0; i < curCnt; i++)
             {
-                infoStorage[i].ShowPhoneInfo();
+                //infoStorage[i].ShowPhoneInfo();
+                Console.WriteLine(infoStorage[i]);
                 Console.WriteLine();
             }
         }
@@ -185,7 +186,8 @@ namespace ConsolePhoneBook
             }
             else
             {
-                infoStorage[dataIdx].ShowPhoneInfo();
+                //infoStorage[dataIdx].ShowPhoneInfo();
+                Console.WriteLine(infoStorage[dataIdx]);
             }
         }
 
@@ -221,7 +223,8 @@ namespace ConsolePhoneBook
             }
             else
             {
-                infoStorage[dataIdx].ShowPhoneInfo();
+                //infoStorage[dataIdx].ShowPhoneInfo();
+                Console.WriteLine(infoStorage[dataIdx]);
                 Console.WriteLine("수정할 정보를 선택해 주세요");
                 if (infoStorage[dataIdx].GetType().Name == "PhoneCompanyInfo" )
                 {
