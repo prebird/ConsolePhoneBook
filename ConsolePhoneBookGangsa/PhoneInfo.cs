@@ -36,7 +36,7 @@ namespace ConsolePhoneBook
 
         public override string ToString()
         {
-            string birth_null = (birth == null) ? "나이 미상" : birth;
+            string birth_null = (string.IsNullOrEmpty(birth)) ? "나이 미상" : birth;
             return $"name : {name} \t phone:{phoneNumber} \t birth:{birth_null} \n";
         }
 
@@ -84,7 +84,7 @@ namespace ConsolePhoneBook
 
         public override string ToString()
         {
-            return $"{base.ToString()}\tmajor: {major}\tyear: {year}\n";
+            return $"{base.ToString()}major: {major}\tyear: {year}\n";
         }
 
 
@@ -127,7 +127,7 @@ namespace ConsolePhoneBook
 
         public override string ToString()
         {
-            return $"{base.ToString()}\tcompany: {company}\n";
+            return $"{base.ToString()}company: {company}\n";
         }
 
 
