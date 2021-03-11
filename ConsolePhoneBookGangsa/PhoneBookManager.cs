@@ -262,23 +262,38 @@ namespace ConsolePhoneBook
         // Clone을 하면 100개 다 복사되지만 copy를 하면 원하는만큼만 복사된다
         public void SortData()
         {
-            /*
-            Console.WriteLine("정렬하실 기준을 고르시오");
-            Console.WriteLine("1.이름 순  2.전화번호 순");
-            string sort_criteria1 = Console.ReadLine();
-            Console.WriteLine("1.오름차순  2. 내림차순");
-            string sort_criteria2 = Console.ReadLine();
-            */
             PhoneInfo[] newArray = new PhoneInfo[curCnt];
-            newArray.CopyTo(infoStorage, 0);
-            Array.Sort(newArray);
+            // 내용 배열, 내용배열시작, 그릇배열, 그릇배열시작, 내용배열길이
+            Array.Copy(infoStorage, 0, newArray, 0, curCnt);
+
+            Console.WriteLine("정렬하실 기준을 고르시오");
+            Console.WriteLine("1.이름 순  2.전화번호 순  3. 이름 내림차순  4. 전화번호 내림차순");
+            string sort_criteria = Console.ReadLine();
+
+            switch (sort_criteria)
+            {
+                case "1":
+                    Array.Sort(newArray);
+                    break;
+                case "2":
+                    Array.Sort(newArray, new ComparePhoneAsc());
+                    break;
+                case "3":
+                    Array.Sort(newArray, new CompareNameDesc());
+                    break;
+                case "4":
+                    Array.Sort(newArray, new ComparePhoneDesc());
+
+                    break;
+                default:
+                    Console.WriteLine("다시 입력하시오");
+                    break;
+            }
+            // 출력
             for (int i = 0; i < curCnt; i++)
             {
-                Console.WriteLine(newArray);
+                Console.WriteLine(newArray[i]);
             }
-
-
-
         }
 
         
