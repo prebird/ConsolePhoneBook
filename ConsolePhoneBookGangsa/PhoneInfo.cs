@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsolePhoneBook
 {
-    public class PhoneInfo
+    public class PhoneInfo : IComparable
     {
         string name;            // 필수 // private
         string phoneNumber;     // 필수
@@ -67,8 +67,14 @@ namespace ConsolePhoneBook
             }
         }
 
-
+        public virtual int CompareTo(object obj)
+        {
+            PhoneInfo other = (PhoneInfo)obj;
+            return this.Name.CompareTo(other.Name); // 1->1, -1->-1
+            
+        }
     }
+
 
     public class PhoneUnivInfo : PhoneInfo
 
@@ -114,6 +120,12 @@ namespace ConsolePhoneBook
                 }
             }
         }
+
+        public override int CompareTo(object obj)
+        {
+            PhoneUnivInfo other = (PhoneUnivInfo)obj;
+            return this.Name.CompareTo(other);
+        }
     }
 
     public class PhoneCompanyInfo : PhoneInfo
@@ -146,6 +158,12 @@ namespace ConsolePhoneBook
             {
                 this.company = value;
             }
+        }
+
+        public override int CompareTo(object obj)
+        {
+            PhoneCompanyInfo other = (PhoneCompanyInfo)obj;
+            return this.Name.CompareTo(other);
         }
     }
 }

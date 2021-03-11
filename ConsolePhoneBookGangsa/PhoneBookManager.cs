@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,7 @@ namespace ConsolePhoneBook
         public void ShowMenu()
         {
             Console.WriteLine("-------------------주소록-----------------------------------------");
-            Console.WriteLine("  1.입력 |  2.목록  |  3.검색 |  4.삭제  |  5.수정  | 6.종료   ");
+            Console.WriteLine("  1.입력 |  2.목록  |  3.검색 |  4.삭제  |  5.수정  |  6.정렬  |  7.종료   ");
             Console.WriteLine("-------------------주소록------------------------------------------");
             Console.Write("선택: ");
         }
@@ -226,14 +227,14 @@ namespace ConsolePhoneBook
                 //infoStorage[dataIdx].ShowPhoneInfo();
                 Console.WriteLine(infoStorage[dataIdx]);
                 Console.WriteLine("수정할 정보를 선택해 주세요");
-                if (infoStorage[dataIdx].GetType().Name == "PhoneCompanyInfo" )
+                if (infoStorage[dataIdx].GetType().Name == "PhoneCompanyInfo")
                 {
                     Console.WriteLine("1.이름  2.전화번호  3.생일   4.회사명");
                     CommonAlter(dataIdx);
                 }
                 else if (infoStorage[dataIdx].GetType().Name == "PhoneUnivInfo")
                 {
-                    
+
                     Console.WriteLine("1.이름  2.전화번호  3.생일   4.전공   5.학년");
                     CommonAlter(dataIdx);
                 }
@@ -247,8 +248,8 @@ namespace ConsolePhoneBook
 
                 Console.WriteLine($"{name} 번호가 수정되었습니다.");
             }
- 
         }
+
         public void CommonAlter(int dataIdx)
         {
             string num = Console.ReadLine();
@@ -257,7 +258,31 @@ namespace ConsolePhoneBook
             infoStorage[dataIdx].AlterPhonInfo(num, value);
         }
 
+        // 새 배열에 넣어서 값이 바뀌지 않도록 하는것이 중요하다
+        // Clone을 하면 100개 다 복사되지만 copy를 하면 원하는만큼만 복사된다
+        public void SortData()
+        {
+            /*
+            Console.WriteLine("정렬하실 기준을 고르시오");
+            Console.WriteLine("1.이름 순  2.전화번호 순");
+            string sort_criteria1 = Console.ReadLine();
+            Console.WriteLine("1.오름차순  2. 내림차순");
+            string sort_criteria2 = Console.ReadLine();
+            */
+            PhoneInfo[] newArray = new PhoneInfo[curCnt];
+            newArray.CopyTo(infoStorage, 0);
+            Array.Sort(newArray);
+            for (int i = 0; i < curCnt; i++)
+            {
+                Console.WriteLine(newArray);
+            }
 
 
+
+        }
+
+        
     }
+
+    
 }

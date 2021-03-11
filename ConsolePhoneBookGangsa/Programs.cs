@@ -26,7 +26,8 @@ namespace ConsolePhoneBook
                     case 3: manager.SearchData(); break;
                     case 4: manager.DeleteData(); break;
                     case 5: manager.AlterData(); break;
-                    case 6:
+                    case 6: manager.SortData(); break;
+                    case 7:
                         Console.WriteLine("프로그램을 종료합니다.");
                         return; // 반복문 까지 종료
                         
