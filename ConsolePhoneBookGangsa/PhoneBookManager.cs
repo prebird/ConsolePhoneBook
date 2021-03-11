@@ -274,7 +274,7 @@ namespace ConsolePhoneBook
             Array.Sort(newArray);
             for (int i = 0; i < curCnt; i++)
             {
-                Console.WriteLine(newArray);
+                Console.WriteLine(newArray[i]);
             }
 
 
