@@ -123,12 +123,12 @@ namespace ConsolePhoneBook
             }
         }
         
-
-        public override int CompareTo(object obj)
-        {
-            PhoneUnivInfo other = (PhoneUnivInfo)obj;
-            return this.Name.CompareTo(other);
-        }
+        // ** CompareTo 오버라이드 안해줘도됨!
+        //public override int CompareTo(object obj)
+        //{
+        //    PhoneUnivInfo other = (PhoneUnivInfo)obj;
+        //    return this.Name.CompareTo(other);
+        //}
     }
 
     public class PhoneCompanyInfo : PhoneInfo
@@ -163,14 +163,14 @@ namespace ConsolePhoneBook
             }
         }
         
-        public override int CompareTo(object obj)
-        {
-            PhoneCompanyInfo other = (PhoneCompanyInfo)obj;
-            return this.Name.CompareTo(other);
-        }
+        //public override int CompareTo(object obj)
+        //{
+        //    PhoneCompanyInfo other = (PhoneCompanyInfo)obj;
+        //    return this.Name.CompareTo(other);
+        //}
         
     }
-
+    // 디센딩은 그냥 Array.Reverse()로 하자!
     class CompareNameDesc : IComparer
     {
         // Compare는 자손타입까지 다 안해줘도됨..? ㅇㅇ
@@ -196,6 +196,7 @@ namespace ConsolePhoneBook
         }
     }
 
+    // 디센딩은 그냥 Array.Reverse()로 하자!
     class ComparePhoneDesc : IComparer
     {
         public int Compare(object x, object y)
