@@ -273,14 +273,15 @@ namespace ConsolePhoneBook
             switch (sort_criteria)
             {
                 case "1":
-                    Array.Sort(newArray);
+                    Array.Sort(newArray, new CompareName());
                     break;
                 case "2":
                     Array.Sort(newArray, new ComparePhoneAsc());
                     break;
                 case "3":
                     // 디센딩은 그냥 Array.Reverse()로 하자!
-                    Array.Sort(newArray, new CompareNameDesc());
+                    Array.Sort(newArray, new CompareName());
+                    Array.Reverse(newArray);
                     break;
                 case "4":
                     // 디센딩은 그냥 Array.Reverse()로 하자!

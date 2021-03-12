@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ConsolePhoneBook
 {
-    public class PhoneInfo : IComparable
+    public class PhoneInfo //: IComparable
     {
         string name;            // 필수 // private
         string phoneNumber;     // 필수
@@ -68,12 +68,15 @@ namespace ConsolePhoneBook
             }
         }
 
+        // Icomparable 상속 안받고 Icomparer만 만들기
+        /*
         public virtual int CompareTo(object obj)
         {
             PhoneInfo other = (PhoneInfo)obj;
             return this.Name.CompareTo(other.Name); // 1->1, -1->-1
             
         }
+       */
     }
 
 
@@ -205,6 +208,18 @@ namespace ConsolePhoneBook
             PhoneInfo other = (PhoneInfo)y;
 
             return (-1)*first.PhoneNumber.CompareTo(other.PhoneNumber);
+
+        }
+    }
+    // NameComparer
+    class CompareName : IComparer
+    {
+        public int Compare(object x, object y)
+        {
+            PhoneInfo first = (PhoneInfo)x;
+            PhoneInfo other = (PhoneInfo)y;
+
+            return first.Name.CompareTo(other.Name);
 
         }
     }
