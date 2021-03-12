@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,7 +38,7 @@ namespace ConsolePhoneBook
         public override string ToString()
         {
             string birth_null = (string.IsNullOrEmpty(birth)) ? "나이 미상" : birth;
-            return $"name : {name} \t phone:{phoneNumber} \t birth:{birth_null} \n";
+            return $"구분:{this.GetType().Name} \nname : {name} \t phone:{phoneNumber} \t birth:{birth_null} \n";
         }
 
         /*
@@ -103,6 +104,7 @@ namespace ConsolePhoneBook
             Console.WriteLine();
         }
         */
+        
         public override void AlterPhonInfo(string num, string value)
         {
 
@@ -120,6 +122,7 @@ namespace ConsolePhoneBook
                 }
             }
         }
+        
 
         public override int CompareTo(object obj)
         {
@@ -159,11 +162,49 @@ namespace ConsolePhoneBook
                 this.company = value;
             }
         }
-
+        
         public override int CompareTo(object obj)
         {
             PhoneCompanyInfo other = (PhoneCompanyInfo)obj;
             return this.Name.CompareTo(other);
+        }
+        
+    }
+
+    class CompareNameDesc : IComparer
+    {
+        // Compare는 자손타입까지 다 안해줘도됨..? ㅇㅇ
+        public int Compare(object x, object y)
+        {
+            PhoneInfo first = (PhoneInfo)x;
+            PhoneInfo other = (PhoneInfo)y;
+
+            return (-1)*first.Name.CompareTo(other.Name);
+
+        }
+    }
+
+    class ComparePhoneAsc : IComparer
+    {
+        public int Compare(object x, object y)
+        {
+            PhoneInfo first = (PhoneInfo)x;
+            PhoneInfo other = (PhoneInfo)y;
+
+            return first.PhoneNumber.CompareTo(other.PhoneNumber);
+
+        }
+    }
+
+    class ComparePhoneDesc : IComparer
+    {
+        public int Compare(object x, object y)
+        {
+            PhoneInfo first = (PhoneInfo)x;
+            PhoneInfo other = (PhoneInfo)y;
+
+            return (-1)*first.PhoneNumber.CompareTo(other.PhoneNumber);
+
         }
     }
 }
