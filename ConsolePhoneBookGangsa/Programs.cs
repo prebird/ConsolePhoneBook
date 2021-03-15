@@ -13,27 +13,39 @@ namespace ConsolePhoneBook
         {
             PhoneBookManager manager = new PhoneBookManager();
 
-            while (true)
+            bool programOn = true;
+            while (programOn)
             {
-                manager.ShowMenu();
-                string choice = Console.ReadLine();
-                
-
-                switch(choice)
+                try
                 {
-                    case "1": manager.InputData(); break;
-                    case "2": manager.ListData(); break;
-                    case "3": manager.SearchData(); break;
-                    case "4": manager.DeleteData(); break;
-                    case "5": manager.AlterData(); break;
-                    case "6": manager.SortData(); break;
-                    case "7":
-                        Console.WriteLine("프로그램을 종료합니다.");
-                        return; // 반복문 까지 종료
-                    default:
-                        Console.WriteLine("다시입력하시오"); break;
+                    manager.ShowMenu();
+                    int choice = int.Parse(Console.ReadLine());
 
 
+                    switch (choice)
+                    {
+                        case 1: manager.InputData(); break;
+                        case 2: manager.ListData(); break;
+                        case 3: manager.SearchData(); break;
+                        case 4: manager.DeleteData(); break;
+                        case 5: manager.AlterData(); break;
+                        case 6: manager.SortData(); break;
+                        case 7:
+                            Console.WriteLine("프로그램을 종료합니다.");
+                            programOn = false;
+                            break;
+                        default:
+                            throw new Exception("1에서 6값을 입력하시오");
+                    }
+                }
+                catch (FormatException err)
+                {
+                    Console.WriteLine($"입력값이 잘못 되었습니다. {err.Message}");
+                }
+                catch (Exception err)
+                {
+
+                    Console.WriteLine($"처리중 에러: { err.Message}");
                 }
             }
         }

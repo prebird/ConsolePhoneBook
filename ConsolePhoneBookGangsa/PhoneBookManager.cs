@@ -29,13 +29,12 @@ namespace ConsolePhoneBook
             int choice;
             while (true)
             {
-                int.TryParse(Console.ReadLine(), out choice);
-                break;
+                bool isGood = int.TryParse(Console.ReadLine(), out choice);
+                if (isGood == true) { break; }
             }
-            if (choice <1 || choice >3)
+            if (choice < 1 || choice >3)
             {
-                Console.WriteLine("1~3 중 선택하시오");
-                return;
+                throw new Exception("1에서 3의 값을 입력하시오");
             }
 
             PhoneInfo info = null; // 부모로 받음
@@ -54,6 +53,7 @@ namespace ConsolePhoneBook
                 Console.WriteLine("입력이 완료되었습니다.");
             }
 
+            
 
         }
 
@@ -135,8 +135,9 @@ namespace ConsolePhoneBook
             string major = Console.ReadLine();
 
             Console.Write("학년:");
+            
             int year = int.Parse(Console.ReadLine());
-
+ 
             return new PhoneUnivInfo(comInfo[0], comInfo[1], comInfo[2], major, year);
         }
 
