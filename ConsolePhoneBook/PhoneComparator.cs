@@ -7,25 +7,27 @@ using System.Threading.Tasks;
 
 namespace ConsolePhoneBook
 {
-    class PhoneComparator : IComparer
+    class PhoneComparator : IComparer<PhoneInfo>
     {
-        public int Compare(object x, object y)
+        public int Compare(PhoneInfo x, PhoneInfo y)
         {
-            PhoneInfo first = (PhoneInfo)x;
-            PhoneInfo second = (PhoneInfo)y;
+            PhoneInfo first = x;
+            PhoneInfo second = y;
 
             return first.Phone.CompareTo(second.Phone);
         }
     }
 
-    class NameComparator : IComparer
+    class NameComparator : IComparer<PhoneInfo>
     {
-        public int Compare(object x, object y)
+        public int Compare(PhoneInfo x, PhoneInfo y)
         {
-            PhoneInfo first = (PhoneInfo)x;
-            PhoneInfo second = (PhoneInfo)y;
+            PhoneInfo first = x;
+            PhoneInfo second = y;
 
             return first.Name.CompareTo(second.Name);
         }
+
+        
     }
 }

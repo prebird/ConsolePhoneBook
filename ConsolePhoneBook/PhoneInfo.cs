@@ -42,6 +42,30 @@ namespace ConsolePhoneBook
             PhoneInfo other = (PhoneInfo)obj;
             return this.name.CompareTo(other.name);
         }
+
+        public override string ToString()
+        {
+            string birth_null = birth == null ? "나이미상" : birth;
+            return $"이름:{name}, 전번:{phoneNumber}, 생일;{birth_null}";
+        }
+
+        public override bool Equals(object obj)
+        {
+            PhoneInfo input = (PhoneInfo)obj;
+            if (this.name == input.name)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return EqualityComparer<string>.Default.GetHashCode(Name);
+        }
     }
 
     public class PhoneUnivInfo : PhoneInfo
@@ -61,6 +85,12 @@ namespace ConsolePhoneBook
             Console.Write("\tmajor: " + this.major);
             Console.Write("\tyear: " + this.year);
         }
+
+        public override string ToString()
+        {
+            base.ShowPhoneInfo();
+            return $"\nmajor:{major} year:{year}";
+        }
     }
 
     public class PhoneCompanyInfo : PhoneInfo
@@ -76,6 +106,12 @@ namespace ConsolePhoneBook
         {
             base.ShowPhoneInfo();
             Console.Write("\tcompany: " + this.company);
+        }
+
+        public override string ToString()
+        {
+            base.ShowPhoneInfo();
+            return $"\tcompany:{company}";
         }
     }
 }

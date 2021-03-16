@@ -9,7 +9,8 @@ namespace ConsolePhoneBook
     public class PhoneBookManager
     {
         const int MAX_CNT = 100;
-        PhoneInfo[] infoStorage = new PhoneInfo[MAX_CNT];
+        //PhoneInfo[] infoStorage = new PhoneInfo[MAX_CNT];
+        List<PhoneInfo> infoStorage = new List<PhoneInfo>();
         int curCnt = 0;
         static PhoneBookManager manager;
 
@@ -65,29 +66,30 @@ namespace ConsolePhoneBook
                 }
             }
             //선택된 조건에 따라 정렬
-            PhoneInfo[] newArr = new PhoneInfo[curCnt];
-            Array.Copy(infoStorage, 0, newArr, 0, curCnt);
+            //PhoneInfo[] newArr = new PhoneInfo[curCnt];
+            List<PhoneInfo> newList = new List<PhoneInfo>();
+            newList = infoStorage;
             //Array.Copy(infoStorage, newArr, curCnt);
             if (choice == 1)
             {
-                Array.Sort(newArr, new NameComparator());
+                newList.Sort(new NameComparator());
             }
             else if (choice == 2)
             {
-                Array.Sort(newArr, new NameComparator());
-                Array.Reverse(newArr);
+                newList.Sort(new NameComparator());
+                newList.Reverse();
             }
             else if (choice == 3)
             {
-                Array.Sort(newArr, new PhoneComparator());
+                newList.Sort(new PhoneComparator());
             }
             else
             {
-                Array.Sort(newArr, new PhoneComparator());
-                Array.Reverse(newArr);
+                newList.Sort(new PhoneComparator());
+                newList.Reverse();
             }
 
-            foreach(PhoneInfo info in newArr)
+            foreach(PhoneInfo info in newList)
             {
                 Console.WriteLine(info.ToString());
             }
@@ -119,7 +121,7 @@ namespace ConsolePhoneBook
 
             if (info != null)
             {
-                infoStorage[curCnt++] = info;
+                infoStorage.Add(info);
                 Console.WriteLine("데이터 입력이 완료되었습니다.");
             }            
         }
@@ -202,17 +204,22 @@ namespace ConsolePhoneBook
 
         public void ListData()
         {
-            if (curCnt == 0)
+            if (infoStorage.Count == 0)
             {
                 Console.WriteLine("입력된 주소록이 없습니다");
                 return;
             }
 
-            for (int i = 0; i < curCnt; i++)
+            //for (int i = 0; i < curCnt; i++)
+            //{
+            //    infoStorage[i].ShowPhoneInfo();
+            //    Console.WriteLine();
+            //}
+            foreach (PhoneInfo info in infoStorage)
             {
-                infoStorage[i].ShowPhoneInfo();
-                Console.WriteLine();
+                Console.WriteLine(info);
             }
+
         }
 
         public void SearchData()
@@ -233,7 +240,7 @@ namespace ConsolePhoneBook
 
         private int SearchName(string name)
         {
-            for (int i = 0; i < curCnt; i++)
+            for (int i = 0; i < infoStorage.Count; i++)
             {
                 if (infoStorage[i].Name == name)
                 {
@@ -241,6 +248,8 @@ namespace ConsolePhoneBook
                 }
             }
             return -1;
+
+
         }
 
         public void DeleteData()
@@ -254,12 +263,15 @@ namespace ConsolePhoneBook
             }
             else
             {
-                for(int i=dataIdx; i<curCnt; i++)
-                {
-                    infoStorage[i] = infoStorage[i + 1];
-                }
-                curCnt--;
-                Console.WriteLine("데이터 삭제가 완료되었습니다");
+                //for(int i=dataIdx; i<curCnt; i++)
+                //{
+                //    infoStorage[i] = infoStorage[i + 1];
+                //}
+                //curCnt--;
+                //Console.WriteLine("데이터 삭제가 완료되었습니다");
+
+                infoStorage.RemoveAt(dataIdx);
+                Console.WriteLine("데이터가 삭제되었습니다");
             }
         }
     }

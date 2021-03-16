@@ -1,0 +1,5 @@
+﻿빌드 시작...
+1>------ 빌드 시작: 프로젝트: ConsolePhoneBook, 구성: Debug Any CPU ------
+1>C:\language\Csharp\ConsolePhoneBook\ConsolePhoneBook\PhoneBookManager.cs(14,13,14,19): warning CS0414: 'PhoneBookManager.curCnt' 필드가 할당되었지만 사용되지 않았습니다.
+1>  ConsolePhoneBook -> C:\language\Csharp\ConsolePhoneBook\ConsolePhoneBook\bin\Debug\ConsolePhoneBook.exe
+========== 빌드: 성공 1, 실패 0, 최신 0, 생략 0 ==========
