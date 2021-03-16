@@ -6,148 +6,142 @@ using System.Threading.Tasks;
 
 namespace ConsolePhoneBook
 {
-    class PhoneBookManager
+    public class PhoneBookManager
     {
         const int MAX_CNT = 100;
         PhoneInfo[] infoStorage = new PhoneInfo[MAX_CNT];
         int curCnt = 0;
+        static PhoneBookManager manager;
+
+        private PhoneBookManager() 
+        {
+
+        }
+
+        public static PhoneBookManager CreateManagerInstance()
+        {
+            if (manager == null)
+            {
+                manager = new PhoneBookManager();
+            }
+            return manager;
+        }
 
         public void ShowMenu()
         {
-            Console.WriteLine("-------------------주소록--------------------------");
-            Console.WriteLine("  1.입력 |  2.목록  |  3.검색 |  4.삭제  |  5.종료   ");
-            Console.WriteLine("-------------------주소록--------------------------");
+            Console.WriteLine("------------------------주소록-------------------------------");
+            Console.WriteLine("   1. 입력 | 2. 목록 | 3. 검색 | 4. 정렬 | 5. 삭제 | 6. 종료");
+            Console.WriteLine("-------------------------------------------------------------");
             Console.Write("선택: ");
         }
 
-        public void ShowSelectMenu()
+        public void SortData()
         {
-            Console.WriteLine("구분을 선택해 주세요");
-            Console.WriteLine("      1.일반 |  2.대학  |  3.회사    ");
-            Console.Write("선택: ");
-        }
-
-        private int CheckName(string name) // private으로 해도 됨 *****************중요******
-        {
-            // 이름중복체크
-            for (int index = 0; index < curCnt; index++) // 놓쳤다
+            int choice;
+            while (true)
             {
-                if (infoStorage[index].Name == name)
+                try
                 {
-                    return index; // return 써줘야함 (break 쓰면 전화번호입력으로, return쓰면 다시 반복 처음가서 이름입력받음)
+                    Console.WriteLine("1.이름ASC   2.이름DESC   3.전화번호ASC   4.전화번호DESC");
+                    Console.Write("선택 >>>  ");
+
+                    while (true)
+                    {
+                        if (int.TryParse(Console.ReadLine(), out choice))
+                            break;
+                    }
+                    if (choice < 1 || choice > 4)
+                    {
+                        throw new MenuChoiceException("1.이름ASC 2.이름DESC 3.전화번호ASC 4.전화번호DESC 중에 선택하십시오.");
+                        //Console.WriteLine("1.이름ASC 2.이름DESC 3.전화번호ASC 4.전화번호DESC 중에 선택하십시오.");
+                        //return;
+                    }
+                    else
+                        break;
+                }
+                catch(Exception err)
+                {
+                    Console.WriteLine(err.Message);
                 }
             }
-            return -1; // 못찾을 경우 무슨 값을 반환할 거냐
-        }
-
-
-
-        public void InputData() 
-        {
-            // 입력값에 대한 유효성을 체크
-            Console.Write("이름: ");
-            string name = Console.ReadLine().Trim(); // 공백 제거
-            if (string.IsNullOrEmpty(name)) // 필수 입력  if (name.Length < 1)--> 선언만 하고 비교를 했을때 에러가 남
+            //선택된 조건에 따라 정렬
+            PhoneInfo[] newArr = new PhoneInfo[curCnt];
+            Array.Copy(infoStorage, 0, newArr, 0, curCnt);
+            //Array.Copy(infoStorage, newArr, curCnt);
+            if (choice == 1)
             {
-                Console.WriteLine("이름은 필수 입력입니다.");
-                return; // while문으로 가기?
+                Array.Sort(newArr, new NameComparator());
+            }
+            else if (choice == 2)
+            {
+                Array.Sort(newArr, new NameComparator());
+                Array.Reverse(newArr);
+            }
+            else if (choice == 3)
+            {
+                Array.Sort(newArr, new PhoneComparator());
             }
             else
             {
-                int dataIdx = CheckName(name);
-                if (dataIdx >= 0)
-                {
-                    Console.WriteLine("이미 등록된 이름입니다. 다른이름으로 입력하세요");
-                    return; //다시 돌아라
-                }
+                Array.Sort(newArr, new PhoneComparator());
+                Array.Reverse(newArr);
             }
-            
-            Console.Write("전화번호: ");
-            string phone = Console.ReadLine().Trim(); // 공백 제거
-            if (string.IsNullOrEmpty(phone)) // if (name.Length < 1)--> 선언만 하고 비교를 했을때 에러가 남
+
+            foreach(PhoneInfo info in newArr)
             {
-                Console.WriteLine("전화번호는 필수 입력입니다.");
+                Console.WriteLine(info.ToString());
+            }
+        }
+
+        public void InputData()
+        {
+            Console.WriteLine("1.일반   2.대학   3.회사");
+            Console.Write("선택 >>>  ");
+            int choice;
+            while (true)
+            {
+                if (int.TryParse(Console.ReadLine(), out choice))
+                    break;
+            }
+            if (choice < 1 || choice > 3)
+            {
+                Console.WriteLine("1.일반   2.대학   3.회사 중에 선택하십시오.");
                 return;
             }
-            Console.Write("생일");
-            string birth = Console.ReadLine().Trim();
-            if (birth.Length < 1)
+
+            PhoneInfo info = null;
+            switch (choice)
             {
-                infoStorage[curCnt++] = new PhoneInfo(name, phone);
+                case 1: info = IuPutFriendInfo(); break;
+                case 2: info = IuPutUnivInfo(); break;
+                case 3: info = IuPutCompanyInfo(); break;
             }
-            else
-            {   
-                infoStorage[curCnt++] = new PhoneInfo(name, phone, birth);
-            }
+
+            if (info != null)
+            {
+                infoStorage[curCnt++] = info;
+                Console.WriteLine("데이터 입력이 완료되었습니다.");
+            }            
         }
 
-        public void InputUnivData()
+        private string[] InputCommonInfo()
         {
-            Console.Write("이름: ");
-            string name = Console.ReadLine().Trim(); 
-            if (string.IsNullOrEmpty(name)) 
-            {
-                Console.WriteLine("이름은 필수 입력입니다.");
-                return; 
-            }
-            else
-            {
-                int dataIdx = CheckName(name);
-                if (dataIdx >= 0)
-                {
-                    Console.WriteLine("이미 등록된 이름입니다. 다른이름으로 입력하세요");
-                    return; 
-                }
-            }
-
-            Console.Write("전화번호: ");
-            string phone = Console.ReadLine().Trim(); 
-            if (string.IsNullOrEmpty(phone)) 
-            {
-                Console.WriteLine("전화번호는 필수 입력입니다.");
-                return;
-            }
-            Console.Write("생일: ");
-            string birth = Console.ReadLine().Trim();
-            Console.Write("학번: ");
-            string univId = Console.ReadLine().Trim();
-            Console.Write("전공: ");
-            string major = Console.ReadLine().Trim();
-
-            if (birth.Length < 1 && univId.Length < 1 && major.Length <1)
-            {
-                infoStorage[curCnt++] = new UnivPhoneInfo(name, phone);
-            }
-            else if (univId.Length < 1 && major.Length < 1)
-            {
-                infoStorage[curCnt++] = new UnivPhoneInfo(name, phone, birth);
-            }
-            else if (major.Length < 1)
-            {
-                infoStorage[curCnt++] = new UnivPhoneInfo(name, phone, birth, univId);
-            }
-            else
-            {
-                infoStorage[curCnt++] = new UnivPhoneInfo(name, phone, birth, univId, major);
-            }
-        }
-
-        public void InputCompanyData()
-        {
+            //입력값을 받은 후에 PhoneInfo 객체를 생성해서 배열에 저장
             Console.Write("이름: ");
             string name = Console.ReadLine().Trim();
-            if (string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(name))  //if (name.Length < 1)
             {
-                Console.WriteLine("이름은 필수 입력입니다.");
-                return;
+                Console.WriteLine("이름은 필수입력입니다.");
+                return null;
             }
             else
             {
-                int dataIdx = CheckName(name);
+                //이름 중복체크
+                int dataIdx = SearchName(name);
                 if (dataIdx >= 0)
                 {
-                    Console.WriteLine("이미 등록된 이름입니다. 다른이름으로 입력하세요");
-                    return;
+                    Console.WriteLine("이미 등록된 이름입니다. 다른 이름으로 입력하세요.");
+                    return null;
                 }
             }
 
@@ -155,106 +149,118 @@ namespace ConsolePhoneBook
             string phone = Console.ReadLine().Trim();
             if (string.IsNullOrEmpty(phone))
             {
-                Console.WriteLine("전화번호는 필수 입력입니다.");
-                return;
+                Console.WriteLine("전화번호는 필수입력입니다.");
+                return null;
             }
+
             Console.Write("생일: ");
             string birth = Console.ReadLine().Trim();
-            Console.Write("사번: ");
-            string companyId = Console.ReadLine().Trim();
-            Console.Write("부서: ");
-            string department = Console.ReadLine().Trim();
 
-            if (birth.Length < 1 && companyId.Length < 1 && department.Length < 1)
-            {
-                infoStorage[curCnt++] = new CompanyPhoneInfo(name, phone);
-            }
-            else if (companyId.Length < 1 && department.Length < 1)
-            {
-                infoStorage[curCnt++] = new CompanyPhoneInfo(name, phone, birth);
-            }
-            else if (department.Length < 1)
-            {
-                infoStorage[curCnt++] = new CompanyPhoneInfo(name, phone, birth, companyId);
-            }
-            else
-            {
-                infoStorage[curCnt++] = new CompanyPhoneInfo(name, phone, birth, companyId, department);
-            }
+            string[] arr = new string[3];
+            arr[0] = name;
+            arr[1] = phone;
+            arr[2] = birth;
+
+            return arr;
         }
 
+        private PhoneInfo IuPutFriendInfo()
+        {
+            string[] cominfo = InputCommonInfo();            
+            if (cominfo == null || cominfo.Length != 3)
+                return null;
 
+            return new PhoneInfo(cominfo[0], cominfo[1], cominfo[2]);
+        }
+
+        private PhoneInfo IuPutUnivInfo()
+        {
+            string[] cominfo = InputCommonInfo();
+            if (cominfo == null || cominfo.Length != 3)
+                return null;
+
+            Console.Write("전공: ");
+            string major = Console.ReadLine();
+
+            Console.Write("학년: ");
+            int year = int.Parse(Console.ReadLine());
+
+            return new PhoneUnivInfo(cominfo[0], cominfo[1], cominfo[2], major, year);
+        }
+
+        private PhoneInfo IuPutCompanyInfo()
+        {
+            string[] cominfo = InputCommonInfo();
+            if (cominfo == null || cominfo.Length != 3)
+                return null;
+
+            Console.Write("회사명: ");
+            string company = Console.ReadLine();
+
+            return new PhoneCompanyInfo(cominfo[0], cominfo[1], cominfo[2], company);
+        }
 
         public void ListData()
         {
-            if (curCnt == 0) //검색결과가 없는건지 오류난건지 구분하기 위해
+            if (curCnt == 0)
             {
-                Console.WriteLine("입력된 주소록이 없습니다.");
-                return; // 밑에 실행되면 안되니까 return!!!
+                Console.WriteLine("입력된 주소록이 없습니다");
+                return;
             }
 
             for (int i = 0; i < curCnt; i++)
             {
-                ChangeType(i);
-            }
-        }
-
-
-        public void ChangeType(int i)
-        {
-            if (infoStorage[i].GetType().Name == "CompanyPhoneInfo")
-            {
-                CompanyPhoneInfo temp = (CompanyPhoneInfo)infoStorage[i];
-                temp.ShowPhoneInfo();
-            }
-            else if (infoStorage[i].GetType().Name == "UnivPhoneInfo")
-            {
-                UnivPhoneInfo temp = (UnivPhoneInfo)infoStorage[i];
-                temp.ShowPhoneInfo();
-            }
-            else
-            {
                 infoStorage[i].ShowPhoneInfo();
+                Console.WriteLine();
             }
         }
-
 
         public void SearchData()
         {
-            Console.WriteLine("검색하실 이름: ");
+            Console.Write("검색하실 이름: ");
             string name = Console.ReadLine().Trim();
-            int dataIdx = CheckName(name);
+            int dataIdx = SearchName(name);
             if (dataIdx < 0)
             {
-                Console.WriteLine("검색된 데이터가 없습니다.");
+                Console.WriteLine("검색된 데이터가 없습니다");
             }
             else
             {
-                ChangeType(dataIdx);
+                infoStorage[dataIdx].ShowPhoneInfo();
+                Console.WriteLine();
             }
+        }
+
+        private int SearchName(string name)
+        {
+            for (int i = 0; i < curCnt; i++)
+            {
+                if (infoStorage[i].Name == name)
+                {
+                    return i;
+                }
+            }
+            return -1;
         }
 
         public void DeleteData()
         {
-            Console.WriteLine("삭제하실 이름: ");
+            Console.Write("삭제하실 이름: ");
             string name = Console.ReadLine().Trim();
-            int dataIdx = CheckName(name);
+            int dataIdx = SearchName(name);
             if (dataIdx < 0)
             {
-                Console.WriteLine("삭제할 데이터가 없습니다.");
+                Console.WriteLine("삭제할 데이터가 없습니다");
             }
             else
             {
-                for (int i = dataIdx; i < curCnt; i++)
+                for(int i=dataIdx; i<curCnt; i++)
                 {
                     infoStorage[i] = infoStorage[i + 1];
                 }
                 curCnt--;
-                Console.WriteLine($"{name} 번호가 삭제되었습니다.");
+                Console.WriteLine("데이터 삭제가 완료되었습니다");
             }
-
         }
-
-       
     }
 }

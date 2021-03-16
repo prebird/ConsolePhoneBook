@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B24D98E0-994D-4D95-9E62-0DCA25409689}</ProjectGuid>
+    <ProjectGuid>{582B03EA-B0DC-40DC-BB1E-8655B5F5B814}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>ConsolePhoneBook</RootNamespace>
     <AssemblyName>ConsolePhoneBook</AssemblyName>
@@ -33,9 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ClassLibrary">
-      <HintPath>..\..\ClassLibrary\bin\Debug\netstandard2.0\ClassLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,12 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CompanyPhoneInfo.cs" />
+    <Compile Include="MenuChoiceException.cs" />
     <Compile Include="PhoneBookManager.cs" />
+    <Compile Include="PhoneComparator.cs" />
     <Compile Include="PhoneInfo.cs" />
-    <Compile Include="Programs.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnivPhoneInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
