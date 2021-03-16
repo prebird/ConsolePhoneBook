@@ -11,7 +11,8 @@ namespace ConsolePhoneBook
     {
         static void Main(string[] args)
         {
-            PhoneBookManager manager = new PhoneBookManager();
+            // 싱글톤 생성
+            PhoneBookManager manager = PhoneBookManager.CreateManagerInstance();
 
             bool programOn = true;
             while (programOn)

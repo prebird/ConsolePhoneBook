@@ -12,6 +12,25 @@ namespace ConsolePhoneBook
         const int MAX_CNT = 100;
         PhoneInfo[] infoStorage = new PhoneInfo[MAX_CNT];
         int curCnt = 0;
+        static PhoneBookManager manager; //스태틱 메서드는 스태틱 전역변수만
+
+        // 싱글톤
+        private PhoneBookManager()
+        {
+            
+        }
+
+        // 싱글톤에서 메서드로 호출받아 만들겠다
+        // 인스턴스 메서드는 인스턴스를 먼저 생성해야 하는데 생성자가 private라 못만듬
+        // -->static
+        public static PhoneBookManager CreateManagerInstance()
+        {
+            if (manager == null) // manager - 스태틱 전역변수 , 있으면 생성안함 -> 싱글톤
+            {
+                manager = new PhoneBookManager(); 
+            }
+            return manager;
+        }
 
         public void ShowMenu()
         {
