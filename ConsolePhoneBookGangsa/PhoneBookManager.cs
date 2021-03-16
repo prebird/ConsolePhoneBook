@@ -287,7 +287,6 @@ namespace ConsolePhoneBook
                 case "4":
                     // 디센딩은 그냥 Array.Reverse()로 하자!
                     Array.Sort(newArray, new ComparePhoneDesc());
-
                     break;
                 default:
                     Console.WriteLine("다시 입력하시오");
